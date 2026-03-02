@@ -1,0 +1,32 @@
+<div class="detail-container" *ngIf="loading">
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>Загрузка...</p>
+  </div>
+</div>
+
+<div class="detail-container" *ngIf="!loading && album">
+  <a routerLink="/albums" class="back-link">← Назад к альбомам</a>
+  <h2>{{ album.title }}</h2>
+  <p><strong>ID альбома:</strong> {{ album.id }}</p>
+  <p><strong>ID пользователя:</strong> {{ album.userId }}</p>
+
+  <div class="edit-section">
+    <label for="titleInput">Редактировать название:</label>
+    <input id="titleInput" type="text" [(ngModel)]="editTitle" class="title-input" />
+    <button class="btn btn-save" (click)="saveTitle()" [disabled]="saving">
+      {{ saving ? 'Сохранение...' : 'Сохранить' }}
+    </button>
+    <span class="saved-msg" *ngIf="saved">✓ Сохранено!</span>
+  </div>
+
+  <div class="detail-actions">
+    <a [routerLink]="['/albums', album.id, 'photos']" class="btn">Смотреть фото</a>
+    <a routerLink="/albums" class="btn btn-back">Назад</a>
+  </div>
+</div>
+
+<div class="detail-container" *ngIf="!loading && !album">
+  <p>Альбом не найден.</p>
+  <a routerLink="/albums" class="back-link">← Назад к альбомам</a>
+</div>

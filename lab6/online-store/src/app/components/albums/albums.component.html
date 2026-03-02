@@ -1,0 +1,20 @@
+<div class="albums-container">
+  <h2>Альбомы</h2>
+
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Загрузка альбомов...</p>
+  </div>
+
+  <div class="albums-grid" *ngIf="!loading">
+    <div class="album-card" *ngFor="let album of albums" [routerLink]="['/albums', album.id]">
+      <h3>#{{ album.id }} — {{ album.title }}</h3>
+      <p>Автор (userId): {{ album.userId }}</p>
+      <div class="album-actions">
+        <a [routerLink]="['/albums', album.id]" class="btn">Подробнее</a>
+        <a [routerLink]="['/albums', album.id, 'photos']" class="btn btn-secondary" (click)="$event.stopPropagation()">Фото</a>
+        <button class="btn btn-danger" (click)="deleteAlbum(album.id, $event)">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
