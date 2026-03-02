@@ -1,0 +1,23 @@
+<header class="main-header">
+  <h1>Online-store</h1>
+</header>
+
+<nav class="categories">
+  <button
+    *ngFor="let cat of categories"
+    class="category-btn"
+    [class.active]="cat.id === selectedCategoryId"
+    (click)="selectCategory(cat.id)">
+    {{ cat.name }}
+  </button>
+</nav>
+
+<div *ngIf="selectedCategoryId === null" class="welcome-message">
+  <h2>Добро пожаловать в наш магазин!</h2>
+  <p>Выберите категорию, чтобы увидеть товары</p>
+</div>
+
+<app-product-list
+  *ngIf="selectedCategoryId !== null"
+  [products]="filteredProducts">
+</app-product-list>
