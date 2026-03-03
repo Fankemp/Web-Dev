@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -13,35 +13,38 @@ import { Album } from '../../models/album.model';
   styleUrl: './album-detail.component.css'
 })
 export class AlbumDetailComponent implements OnInit {
-  album: Album | undefined;
+  album: Album | null = null;
   loading = true;
   editTitle = '';
-  saving = false;
-  saved = false;
 
   constructor(
     private route: ActivatedRoute,
-    private albumService: AlbumService
+    private albumService: AlbumService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.albumService.getAlbum(id).subscribe(data => {
-      this.album = data;
-      this.editTitle = data.title;
-      this.loading = false;
+    this.albumService.getAlbum(id).subscribe({
+      next: (album) => {
+        this.album = album;
+        this.editTitle = album.title;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
   saveTitle(): void {
     if (!this.album) return;
-    this.saving = true;
-    this.saved = false;
     const updated: Album = { ...this.album, title: this.editTitle };
     this.albumService.updateAlbum(updated).subscribe(result => {
       this.album = result;
-      this.saving = false;
-      this.saved = true;
+      this.cdr.detectChanges();
     });
   }
 }

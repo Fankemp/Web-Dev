@@ -1,11 +1,4 @@
-<div class="detail-container" *ngIf="loading">
-  <div class="loading">
-    <div class="spinner"></div>
-    <p>Загрузка...</p>
-  </div>
-</div>
-
-<div class="detail-container" *ngIf="!loading && album">
+<div class="detail-container" *ngIf="!loading && album; else loadingTpl">
   <a routerLink="/albums" class="back-link">← Назад к альбомам</a>
   <h2>{{ album.title }}</h2>
   <p><strong>ID альбома:</strong> {{ album.id }}</p>
@@ -14,10 +7,7 @@
   <div class="edit-section">
     <label for="titleInput">Редактировать название:</label>
     <input id="titleInput" type="text" [(ngModel)]="editTitle" class="title-input" />
-    <button class="btn btn-save" (click)="saveTitle()" [disabled]="saving">
-      {{ saving ? 'Сохранение...' : 'Сохранить' }}
-    </button>
-    <span class="saved-msg" *ngIf="saved">✓ Сохранено!</span>
+    <button class="btn btn-save" (click)="saveTitle()">Сохранить</button>
   </div>
 
   <div class="detail-actions">
@@ -26,7 +16,11 @@
   </div>
 </div>
 
-<div class="detail-container" *ngIf="!loading && !album">
-  <p>Альбом не найден.</p>
-  <a routerLink="/albums" class="back-link">← Назад к альбомам</a>
-</div>
+<ng-template #loadingTpl>
+  <div class="detail-container">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Загрузка...</p>
+    </div>
+  </div>
+</ng-template>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AlbumService } from '../../services/album.service';
 import { Photo } from '../../models/photo.model';
 
@@ -13,8 +14,7 @@ import { Photo } from '../../models/photo.model';
 })
 export class AlbumPhotosComponent implements OnInit {
   albumId = 0;
-  photos: Photo[] = [];
-  loading = true;
+  photos$!: Observable<Photo[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +23,6 @@ export class AlbumPhotosComponent implements OnInit {
 
   ngOnInit(): void {
     this.albumId = Number(this.route.snapshot.paramMap.get('id'));
-    this.albumService.getAlbumPhotos(this.albumId).subscribe(data => {
-      this.photos = data;
-      this.loading = false;
-    });
+    this.photos$ = this.albumService.getAlbumPhotos(this.albumId);
   }
 }

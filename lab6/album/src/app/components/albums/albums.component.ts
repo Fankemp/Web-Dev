@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AlbumService } from '../../services/album.service';
@@ -15,12 +15,13 @@ export class AlbumsComponent implements OnInit {
   albums: Album[] = [];
   loading = true;
 
-  constructor(private albumService: AlbumService) {}
+  constructor(private albumService: AlbumService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.albumService.getAlbums().subscribe(data => {
       this.albums = data;
       this.loading = false;
+      this.cdr.detectChanges();
     });
   }
 
@@ -28,6 +29,7 @@ export class AlbumsComponent implements OnInit {
     event.stopPropagation();
     this.albumService.deleteAlbum(id).subscribe(() => {
       this.albums = this.albums.filter(a => a.id !== id);
+      this.cdr.detectChanges();
     });
   }
 }

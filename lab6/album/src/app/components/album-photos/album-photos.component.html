@@ -4,12 +4,7 @@
     <h2>Фотографии альбома #{{ albumId }}</h2>
   </div>
 
-  <div class="loading" *ngIf="loading">
-    <div class="spinner"></div>
-    <p>Загрузка фотографий...</p>
-  </div>
-
-  <div *ngIf="!loading">
+  <ng-container *ngIf="photos$ | async as photos; else loadingTpl">
     <div class="photos-grid" *ngIf="photos.length > 0">
       <div class="photo-card" *ngFor="let photo of photos">
         <div class="photo-wrapper">
@@ -22,5 +17,12 @@
       </div>
     </div>
     <p *ngIf="photos.length === 0" class="empty">Нет фотографий для этого альбома.</p>
-  </div>
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Загрузка фотографий...</p>
+    </div>
+  </ng-template>
 </div>
