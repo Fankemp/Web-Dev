@@ -17,7 +17,7 @@ export class ProductService {
   products: Product[] = [
     {
       id: 1,
-      categoryId: 2,
+      categoryId: 5,
       name: 'Ноутбук Apple MacBook Air 13 2020 13.3" / 8 Гб / SSD 256 Гб / macOS / MGN63RU/A',
       description: 'Первый чип, разработанный специально для Mac. Поразительно, но система на чипе Apple M1 вмещает 16 миллиардов транзис­торов и объединяет центральный и графи­ческий процессоры, систему Neural Engine, контроллеры ввода-вывода и множество других компонентов. ',
       price: 399983,
