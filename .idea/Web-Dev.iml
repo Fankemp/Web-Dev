@@ -2,6 +2,10 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/lab10/shop-back" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lab10/shop-back/api" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lab8/shop-back" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lab8/shop-back/api" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/lab8/shop-back/venv" />
     </content>
